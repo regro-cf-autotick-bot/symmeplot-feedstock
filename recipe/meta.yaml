@@ -1,3 +1,4 @@
+{% set python_min = '3.9.0' %}
 {% set name = "symmeplot" %}
 {% set version = "0.2.1" %}
 
@@ -6,26 +7,28 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/symmeplot-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/symmeplot-{{ version }}.tar.gz
   sha256: 508b8a1a30e4bc753f4ee8f7bc975dce72a883c3dadf3e84c88fd5e4b39aba63
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 2
 
 requirements:
   host:
-    - python >=3.9
+    - python {{ python_min }}
     - poetry-core
     - pip
   run:
-    - python >=3.9.0
+    - python >={{ python_min }}
     - sympy >=1.12.0
     - numpy >=1.21.6
     - matplotlib-base >=3.7.0
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - symmeplot
 
